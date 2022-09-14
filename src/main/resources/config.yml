@@ -1,0 +1,86 @@
+#                    ___
+#                   /\  \         _____         _____
+#                  /::\  \       /::\  \       /::\  \         ___
+#                 /:/\:\  \     /:/\:\  \     /:/\:\  \       /|  |
+#  ___     ___   /:/  \:\  \   /:/ /::\__\   /:/ /::\__\     |:|  |
+# /\  \   /\__\ /:/__/ \:\__\ /:/_/:/\:|__| /:/_/:/\:|__|    |:|  |
+# \:\  \ /:/  / \:\  \ /:/  / \:\/:/ /:/  / \:\/:/ /:/  /  __|:|__|
+#  \:\  /:/  /   \:\  /:/  /   \::/_/:/  /   \::/_/:/  /  /::::\  \
+#   \:\/:/  /     \:\/:/  /     \:\/:/  /     \:\/:/  /   ~~~~\:\  \
+#    \::/  /       \::/  /       \::/  /       \::/  /         \:\__\
+#     \/__/         \/__/         \/__/         \/__/           \/__/
+
+PLAYER_HEAD:
+  ENABLED: true
+  CONFIGURATION:
+    COMMANDS:
+      # CONSOLE -> Run commands from the console
+      # PLAYER -> Execute the command from the player.
+      TYPE: 'CONSOLE'
+      # {Player} -> Get the player's name
+      # {Uuid} -> Get the player's unique uuid
+      # {Address} -> Get the real ip of the player.
+      COMMAND:
+        - 'gmenu {Player}'
+    SOUNDS:
+      ENABLED: true
+      SOUND: 'NOTE_BASS'
+    WORLDS:
+      - 'Lobby'
+      - 'world'
+    BLOCK_PLACE: true
+    MOVE_DISABLE: true
+    NO_DROP_ITEM: true
+    GIVE_ON_RESPAWN: true
+    NO_DROP_ON_DEATH: true
+    REMOVE_WHEN_CHANGING_THE_WORLD: true
+  PLAYER:
+    ITEM:
+      SLOT: 2
+      NAME: '&aProfile &7(Right-Click)'
+      LORE:
+        - '&7Right-click to browse quests, view achievements,'
+        - '&7activate Network Boosters and more!'
+
+PLAYER_BOW:
+  ENABLED: true
+  CONFIGURATION:
+    SOUND_TELEPORT: 'ENDERMAN_TELEPORT'
+    WORLDS:
+      - 'Lobby'
+      - 'world'
+    PARTICLES:
+      ENABLED: true
+      LIST:
+        - 'DRAGON_BREATH'
+    MOVE_DISABLE: true
+    NO_DROP_ITEM: true
+    GIVE_ON_RESPAWN: true
+    NO_DROP_ON_DEATH: true
+    REMOVE_WHEN_CHANGING_THE_WORLD: true
+  BOW:
+    SLOT: 3
+    ITEM: 'BOW'
+    NAME: '&aMagic Bow &7| &fRight click to shoot'
+    LORE:
+      - ''
+      - '&aThe Secret Arrow!'
+      - ''
+  ARROW:
+    SLOT: 17
+    ITEM: 'ARROW'
+    NAME: '&aThe Secret Arrow!'
+
+version: '1.0'
+
+#      ___           ___
+#     /\__\         /\  \         _____
+#    /:/ _/_        \:\  \       /::\  \
+#   /:/ /\__\        \:\  \     /:/\:\  \
+#  /:/ /:/ _/_   _____\:\  \   /:/  \:\__\
+# /:/_/:/ /\__\ /::::::::\__\ /:/__/ \:|__|
+# \:\/:/ /:/  / \:\~~\~~\/__/ \:\  \ /:/  /
+#  \::/_/:/  /   \:\  \        \:\  /:/  /
+#   \:\/:/  /     \:\  \        \:\/:/  /
+#    \::/  /       \:\__\        \::/  /
+#     \/__/         \/__/         \/__/

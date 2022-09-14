@@ -1,0 +1,84 @@
+#                    ___
+#                   /\  \         _____         _____
+#                  /::\  \       /::\  \       /::\  \         ___
+#                 /:/\:\  \     /:/\:\  \     /:/\:\  \       /|  |
+#  ___     ___   /:/  \:\  \   /:/ /::\__\   /:/ /::\__\     |:|  |
+# /\  \   /\__\ /:/__/ \:\__\ /:/_/:/\:|__| /:/_/:/\:|__|    |:|  |
+# \:\  \ /:/  / \:\  \ /:/  / \:\/:/ /:/  / \:\/:/ /:/  /  __|:|__|
+#  \:\  /:/  /   \:\  /:/  /   \::/_/:/  /   \::/_/:/  /  /::::\  \
+#   \:\/:/  /     \:\/:/  /     \:\/:/  /     \:\/:/  /   ~~~~\:\  \
+#    \::/  /       \::/  /       \::/  /       \::/  /         \:\__\
+#     \/__/         \/__/         \/__/         \/__/           \/__/
+
+ITEMS:
+  COMPASS:
+    ENABLED: true
+    WORLDS:
+      - 'world'
+      - 'Lobby'
+    COMMANDS:
+      # CONSOLE -> Run commands from the console
+      # PLAYER -> Execute the command from the player.
+      TYPE: 'PLAYER'
+      # {Player} -> Get the player's name
+      # {Uuid} -> Get the player's unique uuid
+      # {Address} -> Get the real ip of the player.
+      COMMAND:
+        - 'gmenu {Player}'
+    SOUNDS:
+      ENABLED: true
+      SOUND: 'NOTE_PLING'
+    SETTINGS:
+      MOVE_DISABLE: true
+      NO_DROP_ITEM: true
+      GIVE_ON_RESPAWN: true
+      NO_DROP_ON_DEATH: true
+      REMOVE_WHEN_CHANGING_THE_WORLD: true
+    ITEM: 'COMPASS'
+    SLOT: 1
+    NAME: '&aGame Menu &7(Right Click)'
+    LORE:
+      - '&7Right click to bring up the Game Menu!'
+  SERVER:
+    ENABLED: true
+    WORLDS:
+      - 'world'
+      - 'Lobby'
+    COMMANDS:
+      # CONSOLE -> Run commands from the console
+      # PLAYER -> Execute the command from the player.
+      TYPE: 'PLAYER'
+      # {Player} -> Get the player's name
+      # {Uuid} -> Get the player's unique uuid
+      # {Address} -> Get the real ip of the player.
+      COMMAND:
+        - 'gmenu {Player}'
+    SOUNDS:
+      ENABLED: true
+      SOUND: 'NOTE_PLING'
+    SETTINGS:
+      MOVE_DISABLE: true
+      NO_DROP_ITEM: true
+      GIVE_ON_RESPAWN: true
+      NO_DROP_ON_DEATH: true
+      REMOVE_WHEN_CHANGING_THE_WORLD: true
+    ITEM: 'NETHER_STAR'
+    SLOT: 9
+    NAME: '&aLobby Selector &7(Right Click)'
+    LORE:
+      - '&7Right-click to switch between different lobbies!'
+      - '&7Use this to stay with your friends.'
+
+version: '1.0'
+
+#      ___           ___
+#     /\__\         /\  \         _____
+#    /:/ _/_        \:\  \       /::\  \
+#   /:/ /\__\        \:\  \     /:/\:\  \
+#  /:/ /:/ _/_   _____\:\  \   /:/  \:\__\
+# /:/_/:/ /\__\ /::::::::\__\ /:/__/ \:|__|
+# \:\/:/ /:/  / \:\~~\~~\/__/ \:\  \ /:/  /
+#  \::/_/:/  /   \:\  \        \:\  /:/  /
+#   \:\/:/  /     \:\  \        \:\/:/  /
+#    \::/  /       \:\__\        \::/  /
+#     \/__/         \/__/         \/__/
