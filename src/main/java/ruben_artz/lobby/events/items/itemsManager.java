@@ -38,25 +38,28 @@ public class itemsManager implements Listener {
                 final int itemIndex = plugin.getItems().getInt("ITEMS." + key + ".SLOT") - 1;
                 final ItemStack correctSlot = player.getInventory().getItem(itemIndex);
 
-                if (action.equals(Action.RIGHT_CLICK_AIR) ||
-                        action.equals(Action.RIGHT_CLICK_BLOCK) ||
-                        action.equals(Action.LEFT_CLICK_AIR) ||
-                        action.equals(Action.LEFT_CLICK_BLOCK)) {
-                    if (player.getInventory().getItemInHand().getItemMeta() != null &&
-                            player.getInventory().getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(titleName) &&
-                            correctSlot != null && correctSlot.equals(inHand)) {
-                        ProjectUtils.sendCommands(
-                                player,
-                                Objects.requireNonNull(plugin.getItems().getString("ITEMS." + key + ".COMMANDS.TYPE")),
-                                plugin.getItems().getStringList("ITEMS." + key + ".COMMANDS.COMMAND")
-                        );
-                        ProjectUtils.sendSound(
-                                player,
-                                plugin.getItems().getBoolean("ITEMS." + key + ".SOUNDS.ENABLED"),
-                                plugin.getItems().getString("ITEMS." + key + ".SOUNDS.SOUND")
-                        );
+                try {
+                    if (action.equals(Action.RIGHT_CLICK_AIR) ||
+                            action.equals(Action.RIGHT_CLICK_BLOCK) ||
+                            action.equals(Action.LEFT_CLICK_AIR) ||
+                            action.equals(Action.LEFT_CLICK_BLOCK)) {
+                        if (player.getInventory().getItemInHand().getItemMeta() != null &&
+                                player.getInventory().getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(titleName) &&
+                                correctSlot != null && correctSlot.equals(inHand)) {
+                            ProjectUtils.sendCommands(
+                                    player,
+                                    Objects.requireNonNull(plugin.getItems().getString("ITEMS." + key + ".COMMANDS.TYPE")),
+                                    plugin.getItems().getStringList("ITEMS." + key + ".COMMANDS.COMMAND")
+                            );
+                            ProjectUtils.sendSound(
+                                    player,
+                                    plugin.getItems().getBoolean("ITEMS." + key + ".SOUNDS.ENABLED"),
+                                    plugin.getItems().getString("ITEMS." + key + ".SOUNDS.SOUND")
+                            );
+                        }
                     }
-                }
+                } catch (NullPointerException ignored) {}
+
             }
         }
     }
@@ -71,14 +74,17 @@ public class itemsManager implements Listener {
 
                 final String titleName = addColor.addColors(player, ProjectUtils.placeholderReplace(player, plugin.getItems().getString("ITEMS." + key + ".NAME")));
 
-                if ((event.getCurrentItem() != null) &&
-                        (event.getCurrentItem().getItemMeta() != null) &&
-                        (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(titleName)) &&
-                        (plugin.getItems().getBoolean("ITEMS." + key + ".SETTINGS.MOVE_DISABLE"))) {
-                    if (!player.hasPermission("LobbyHeadItem.Admin")) {
-                        event.setCancelled(true);
+                try {
+                    if ((event.getCurrentItem() != null) &&
+                            (event.getCurrentItem().getItemMeta() != null) &&
+                            (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(titleName)) &&
+                            (plugin.getItems().getBoolean("ITEMS." + key + ".SETTINGS.MOVE_DISABLE"))) {
+                        if (!player.hasPermission("LobbyHeadItem.Admin")) {
+                            event.setCancelled(true);
+                        }
                     }
-                }
+                } catch (NullPointerException ignored) {}
+
             }
         }
     }
@@ -129,12 +135,15 @@ public class itemsManager implements Listener {
 
                 final String titleName = addColor.addColors(player, ProjectUtils.placeholderReplace(player, plugin.getItems().getString("ITEMS." + key + ".NAME")));
 
-                if (plugin.getItems().getBoolean("ITEMS." + key + ".SETTINGS.NO_DROP_ON_DEATH")) {
-                    event.getDrops().removeIf(i -> {
-                        Objects.requireNonNull(i.getItemMeta()).getDisplayName();
-                        return i.getItemMeta().getDisplayName().equalsIgnoreCase(titleName);
-                    });
-                }
+                try {
+                    if (plugin.getItems().getBoolean("ITEMS." + key + ".SETTINGS.NO_DROP_ON_DEATH")) {
+                        event.getDrops().removeIf(i -> {
+                            Objects.requireNonNull(i.getItemMeta()).getDisplayName();
+                            return i.getItemMeta().getDisplayName().equalsIgnoreCase(titleName);
+                        });
+                    }
+                } catch (NullPointerException ignored) {}
+
             }
         }
     }
@@ -146,14 +155,19 @@ public class itemsManager implements Listener {
 
         for (String key : Objects.requireNonNull(plugin.getItems().getConfigurationSection("ITEMS")).getKeys(false)) {
             if (plugin.getItems().getBoolean("ITEMS." + key + ".ENABLED")) {
-                plugin.getItems().getStringList("ITEMS." + key + ".WORLDS").forEach(action -> {
-                    if (world.equalsIgnoreCase(action)) {
-                        ProjectUtils.scheduleSyncDelayedTask(10L, () -> generateItems.setupItems(player));
-                        return;
-                    }
-                    if (plugin.getItems().getBoolean("ITEMS." + key + ".SETTINGS.REMOVE_WHEN_CHANGING_THE_WORLD"))
-                        player.getInventory().remove(Objects.requireNonNull(XMaterial.valueOf(plugin.getItems().getString("ITEMS." + key + ".ITEM")).parseMaterial()));
-                });
+
+                try {
+                    plugin.getItems().getStringList("ITEMS." + key + ".WORLDS").forEach(action -> {
+                        if (world.equalsIgnoreCase(action)) {
+                            ProjectUtils.scheduleSyncDelayedTask(10L, () -> generateItems.setupItems(player));
+                            return;
+                        }
+                        if (plugin.getItems().getBoolean("ITEMS." + key + ".SETTINGS.REMOVE_WHEN_CHANGING_THE_WORLD")) {
+                            player.getInventory().remove(Objects.requireNonNull(XMaterial.valueOf(plugin.getItems().getString("ITEMS." + key + ".ITEM")).parseMaterial()));
+                        }
+                    });
+                } catch (NullPointerException ignored) {}
+
             }
         }
     }

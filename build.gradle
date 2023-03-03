@@ -1,10 +1,10 @@
 plugins {
     id 'java'
-    id("com.github.johnrengelman.shadow").version("7.1.2")
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group = 'ruben_artz.lobby'
-version = '1.2.19'
+version = '1.3.19'
 
 repositories {
     mavenCentral()
@@ -29,7 +29,7 @@ dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT'
 
     implementation 'org.bstats:bstats-bukkit:3.0.0'
-    implementation 'com.github.cryptomorin:XSeries:9.0.0'
+    implementation 'com.github.cryptomorin:XSeries:9.1.0'
 }
 
 java {
@@ -38,13 +38,14 @@ java {
 }
 
 shadowJar {
-    archiveName("Lobby Head Item.jar")
+    archiveFileName.set("Lobby Head Item.jar")
 
     relocate("org.bstats", "ruben_artz.lobby.libraries.bstats")
+    relocate("com.cryptomorin.xseries", "ruben_artz.lobby.libraries.xseries")
 }
 
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 

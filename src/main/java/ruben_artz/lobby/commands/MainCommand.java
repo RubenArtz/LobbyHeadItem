@@ -1,38 +1,60 @@
 package ruben_artz.lobby.commands;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.google.common.collect.ImmutableList;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ruben_artz.lobby.Lobby;
+import ruben_artz.lobby.events.utils.generateItems;
 import ruben_artz.lobby.launch.Launcher;
 import ruben_artz.lobby.utils.addColor;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class MainCommand implements CommandExecutor, TabExecutor {
     private final Lobby plugin = Lobby.getPlugin(Lobby.class);
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!sender.hasPermission("LobbyHeadItem.Admin")) {
-            sender.sendMessage(addColor.addColors("&cYou do not have permissions to execute this command"));
-            return true;
-        }
         if (args.length == 0) {
+            if (!sender.hasPermission("LobbyHeadItem.Admin")) {
+                sender.sendMessage(addColor.addColors("&cYou do not have permissions to execute this command"));
+                return true;
+            }
+
             sender.sendMessage(addColor.addColors(" "));
             sender.sendMessage(addColor.addColors("&7Use &f'/lob help' &7for more information about the plugin."));
             sender.sendMessage(addColor.addColors(" "));
             return true;
         }
         if (args.length == 1) {
+            if (args[0].equalsIgnoreCase("updatePlayerItems")) {
+                if (sender instanceof Player) {
+                    final Player player = (Player) sender;
+                    deleteItems();
+
+                    generateItems.setupItems(player);
+                    generateItems.setupHead(player);
+                    generateItems.setupBow(player);
+                }
+                return true;
+            }
             if (args[0].equalsIgnoreCase("help")) {
+                if (!sender.hasPermission("LobbyHeadItem.Admin")) {
+                    sender.sendMessage(addColor.addColors("&cYou do not have permissions to execute this command"));
+                    return true;
+                }
+
                 sender.sendMessage(addColor.addColors("&8&m-----------------------------------------------------"));
                 sender.sendMessage(addColor.addColors(" "));
                 sender.sendMessage(addColor.addColors("&f                        &bLobby Head Item &cv" + plugin.getDescription().getVersion()));
@@ -45,7 +67,23 @@ public class MainCommand implements CommandExecutor, TabExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("reload")) {
+                if (!sender.hasPermission("LobbyHeadItem.Admin")) {
+                    sender.sendMessage(addColor.addColors("&cYou do not have permissions to execute this command"));
+                    return true;
+                }
+
                 Launcher.getLauncher().registerConfig();
+
+                if (sender instanceof Player) {
+                    deleteItems();
+
+                    Bukkit.getOnlinePlayers().forEach(player -> {
+                        generateItems.setupItems(player);
+                        generateItems.setupHead(player);
+                        generateItems.setupBow(player);
+                    });
+                }
+
                 sender.sendMessage(addColor.addColors("&8&m-----------------------------------------------------"));
                 sender.sendMessage(addColor.addColors(" "));
                 sender.sendMessage(addColor.addColors("&f                        &bLobby Head Item &cv" + plugin.getDescription().getVersion()));
@@ -77,5 +115,26 @@ public class MainCommand implements CommandExecutor, TabExecutor {
         }
         Collections.sort(completions);
         return completions;
+    }
+
+    private void deleteItems() {
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            for (String key : Objects.requireNonNull(plugin.getItems().getConfigurationSection("ITEMS")).getKeys(false)) {
+                if (plugin.getItems().getBoolean("ITEMS." + key + ".SETTINGS.REMOVE_WHEN_CHANGING_THE_WORLD")) {
+                    player.getInventory().remove(Objects.requireNonNull(XMaterial.valueOf(plugin.getItems().getString("ITEMS." + key + ".ITEM")).parseMaterial()));
+                }
+            }
+
+            if (plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.REMOVE_WHEN_CHANGING_THE_WORLD")) {
+                if (XMaterial.BOW.parseMaterial() != null) player.getInventory().remove(XMaterial.BOW.parseMaterial());
+                if (XMaterial.ARROW.parseMaterial() != null) player.getInventory().remove(XMaterial.ARROW.parseMaterial());
+            }
+
+            if (plugin.getConfiguration().getBoolean("PLAYER_HEAD.CONFIGURATION.REMOVE_WHEN_CHANGING_THE_WORLD")) {
+                if (XMaterial.PLAYER_HEAD.parseMaterial() != null) {
+                    player.getInventory().remove(XMaterial.PLAYER_HEAD.parseMaterial());
+                }
+            }
+        });
     }
 }

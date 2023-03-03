@@ -102,7 +102,9 @@ public class ProjectUtils {
 
         if (itemMetaBow != null) itemMetaBow.setDisplayName(addColor.addColors(player, ProjectUtils.placeholderReplace(player, name)));
 
-        if (itemMetaBow != null) itemMetaBow.setUnbreakable(true);
+        try {
+            if (itemMetaBow != null) itemMetaBow.setUnbreakable(true);
+        } catch (NoSuchMethodError ignored) {}
 
         if (itemMetaBow != null) itemMetaBow.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
 

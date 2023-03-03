@@ -17,23 +17,30 @@ public class playerTeleport implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onProjectileHitEvent(ProjectileHitEvent event) {
-        final Player player = (Player) event.getEntity().getShooter();
-        final Location location = event.getEntity().getLocation();
-        location.setYaw(player != null ? player.getLocation().getYaw() : 0);
-        location.setPitch(player != null ? player.getLocation().getPitch() : 0);
 
-        if (!(event.getEntity().getShooter() instanceof Player)) return;
-        if (!(event.getEntity() instanceof Arrow)) return;
+        if (!plugin.getConfiguration().getBoolean("PLAYER_BOW.ENABLED")) return;
 
-        if (player != null) plugin.playerUUIDs.add(player.getUniqueId());
-        if (player != null) player.teleport(location);
-        if (player != null) XSound.play(player, plugin.getConfiguration().getString("PLAYER_BOW.CONFIGURATION.SOUND_TELEPORT"));
-        if (plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.PARTICLES.ENABLED")) {
-            plugin.getConfiguration().getStringList("PLAYER_BOW.CONFIGURATION.PARTICLES.LIST").forEach(s -> ProjectUtils.sendParticles(player, Particle.valueOf(s)));
+        if (event.getEntity() instanceof Arrow && event.getEntity().getShooter() instanceof Player) {
+            final Player player = (Player) event.getEntity().getShooter();
+            final Location location = event.getEntity().getLocation();
+            location.setYaw(player != null ? player.getLocation().getYaw() : 0);
+            location.setPitch(player != null ? player.getLocation().getPitch() : 0);
+
+            if (player != null) plugin.playerUUIDs.add(player.getUniqueId());
+            if (player != null) player.teleport(location);
+            if (player != null) XSound.play(player, plugin.getConfiguration().getString("PLAYER_BOW.CONFIGURATION.SOUND_TELEPORT"));
+
+            if (plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.PARTICLES.ENABLED")) {
+
+                try {
+                    plugin.getConfiguration().getStringList("PLAYER_BOW.CONFIGURATION.PARTICLES.LIST").forEach(s -> ProjectUtils.sendParticles(player, Particle.valueOf(s)));
+                } catch (NoClassDefFoundError ignored) {}
+
+            }
+            ProjectUtils.syncTaskLater(50L, () -> plugin.playerUUIDs.removeIf(u -> u.equals(event.getEntity().getUniqueId())));
+
+            if (event.getEntityType() == EntityType.ARROW) event.getEntity().remove();
         }
-        ProjectUtils.syncTaskLater(50L, () -> plugin.playerUUIDs.removeIf(u -> u.equals(event.getEntity().getUniqueId())));
-
-        if (event.getEntityType() == EntityType.ARROW) event.getEntity().remove();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)

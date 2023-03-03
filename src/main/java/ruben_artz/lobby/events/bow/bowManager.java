@@ -32,14 +32,18 @@ public class bowManager implements Listener {
 
         if (plugin.getConfiguration().getBoolean("PLAYER_BOW.ENABLED")) {
             if (!ProjectUtils.getWorldsItems(player, plugin.getConfiguration().getStringList("PLAYER_BOW.CONFIGURATION.WORLDS"))) return;
-            if ((itemStack.hasItemMeta()) &&
-                    (getDisplayName.equalsIgnoreCase(titleBow)) ||
-                    (getDisplayName.equalsIgnoreCase(titleArrow)) &&
-                            plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.NO_DROP_ITEM")) {
-                if (!player.hasPermission("LobbyHeadItem.Admin")) {
-                    event.setCancelled(true);
+
+            try {
+                if ((itemStack.hasItemMeta()) &&
+                        (getDisplayName.equalsIgnoreCase(titleBow)) ||
+                        (getDisplayName.equalsIgnoreCase(titleArrow)) &&
+                                plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.NO_DROP_ITEM")) {
+                    if (!player.hasPermission("LobbyHeadItem.Admin")) {
+                        event.setCancelled(true);
+                    }
                 }
-            }
+            } catch (NullPointerException ignored) {}
+
         }
     }
 
@@ -52,17 +56,21 @@ public class bowManager implements Listener {
 
         if (plugin.getConfiguration().getBoolean("PLAYER_BOW.ENABLED")) {
             if (!ProjectUtils.getWorldsItems(player, plugin.getConfiguration().getStringList("PLAYER_BOW.CONFIGURATION.WORLDS"))) return;
-            if ((event.getCurrentItem() != null) &&
-                    (event.getCurrentItem().getItemMeta() != null) &&
-                    (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(titleBow)) ||
-                    (event.getCurrentItem() != null) &&
-                            (event.getCurrentItem().getItemMeta() != null) &&
-                            (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(titleArrow)) &&
-                            plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.MOVE_DISABLE")) {
-                if (!player.hasPermission("LobbyHeadItem.Admin")) {
-                    event.setCancelled(true);
+
+            try {
+                if ((event.getCurrentItem() != null) &&
+                        (event.getCurrentItem().getItemMeta() != null) &&
+                        (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(titleBow)) ||
+                        (event.getCurrentItem() != null) &&
+                                (event.getCurrentItem().getItemMeta() != null) &&
+                                (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(titleArrow)) &&
+                                plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.MOVE_DISABLE")) {
+                    if (!player.hasPermission("LobbyHeadItem.Admin")) {
+                        event.setCancelled(true);
+                    }
                 }
-            }
+            } catch (NullPointerException ignored) {}
+
         }
     }
 
@@ -71,6 +79,7 @@ public class bowManager implements Listener {
         final Player player = event.getPlayer();
         if (plugin.getConfiguration().getBoolean("PLAYER_BOW.ENABLED")) {
             if (!ProjectUtils.getWorldsItems(player, plugin.getConfiguration().getStringList("PLAYER_BOW.CONFIGURATION.WORLDS"))) return;
+
             if (plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.GIVE_ON_RESPAWN")) {
                 generateItems.setupBow(player);
             }
@@ -84,12 +93,17 @@ public class bowManager implements Listener {
         final String titleArrow = addColor.addColors(player, ProjectUtils.placeholderReplace(player, plugin.getConfiguration().getString("PLAYER_BOW.ARROW.NAME")));
         if (plugin.getConfiguration().getBoolean("PLAYER_BOW.ENABLED")) {
             if (!ProjectUtils.getWorldsItems(player, plugin.getConfiguration().getStringList("PLAYER_BOW.CONFIGURATION.WORLDS"))) return;
+
             if (plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.NO_DROP_ON_DEATH")) {
-                event.getDrops().removeIf(i -> {
-                    Objects.requireNonNull(i.getItemMeta()).getDisplayName();
-                    return i.getItemMeta().getDisplayName().equalsIgnoreCase(titleBow)
-                            || i.getItemMeta().getDisplayName().equalsIgnoreCase(titleArrow);
-                });
+
+                try {
+                    event.getDrops().removeIf(i -> {
+                        Objects.requireNonNull(i.getItemMeta()).getDisplayName();
+                        return i.getItemMeta().getDisplayName().equalsIgnoreCase(titleBow)
+                                || i.getItemMeta().getDisplayName().equalsIgnoreCase(titleArrow);
+                    });
+                } catch (NullPointerException ignored) {}
+
             }
         }
     }
@@ -101,14 +115,18 @@ public class bowManager implements Listener {
 
         if (plugin.getConfiguration().getBoolean("PLAYER_BOW.ENABLED")) {
             plugin.getConfiguration().getStringList("PLAYER_BOW.CONFIGURATION.WORLDS").forEach(action -> {
-                if (world.equalsIgnoreCase(action)) {
-                    ProjectUtils.scheduleSyncDelayedTask(10L, () -> generateItems.setupBow(player));
-                    return;
-                }
-                if (plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.REMOVE_WHEN_CHANGING_THE_WORLD")) {
-                    if (XMaterial.BOW.parseMaterial() != null) player.getInventory().remove(XMaterial.BOW.parseMaterial());
-                    if (XMaterial.ARROW.parseMaterial() != null) player.getInventory().remove(XMaterial.ARROW.parseMaterial());
-                }
+
+                try {
+                    if (world.equalsIgnoreCase(action)) {
+                        ProjectUtils.scheduleSyncDelayedTask(10L, () -> generateItems.setupBow(player));
+                        return;
+                    }
+                    if (plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.REMOVE_WHEN_CHANGING_THE_WORLD")) {
+                        if (XMaterial.BOW.parseMaterial() != null) player.getInventory().remove(XMaterial.BOW.parseMaterial());
+                        if (XMaterial.ARROW.parseMaterial() != null) player.getInventory().remove(XMaterial.ARROW.parseMaterial());
+                    }
+                } catch (NullPointerException ignored) {}
+
             });
         }
     }

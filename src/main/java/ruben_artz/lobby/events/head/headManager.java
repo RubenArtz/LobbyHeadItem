@@ -38,25 +38,28 @@ public class headManager implements Listener {
             final int itemIndex = plugin.getConfiguration().getInt("PLAYER_HEAD.PLAYER.ITEM.SLOT") - 1;
             final ItemStack correctSlot = player.getInventory().getItem(itemIndex);
 
-            if (action.equals(Action.RIGHT_CLICK_AIR) ||
-                    action.equals(Action.RIGHT_CLICK_BLOCK) ||
-                    action.equals(Action.LEFT_CLICK_AIR) ||
-                    action.equals(Action.LEFT_CLICK_BLOCK)) {
-                if (player.getInventory().getItemInHand().getItemMeta() != null &&
-                        player.getInventory().getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(titleName) &&
-                        correctSlot != null && correctSlot.equals(inHand)) {
-                    ProjectUtils.sendCommands(
-                            player,
-                            Objects.requireNonNull(plugin.getConfiguration().getString("PLAYER_HEAD.CONFIGURATION.COMMANDS.TYPE")),
-                            plugin.getConfiguration().getStringList("PLAYER_HEAD.CONFIGURATION.COMMANDS.COMMAND")
-                    );
-                    ProjectUtils.sendSound(
-                            player,
-                            plugin.getConfiguration().getBoolean("PLAYER_HEAD.CONFIGURATION.SOUNDS.ENABLED"),
-                            plugin.getConfiguration().getString("PLAYER_HEAD.CONFIGURATION.SOUNDS.SOUND")
-                    );
+            try {
+                if (action.equals(Action.RIGHT_CLICK_AIR) ||
+                        action.equals(Action.RIGHT_CLICK_BLOCK) ||
+                        action.equals(Action.LEFT_CLICK_AIR) ||
+                        action.equals(Action.LEFT_CLICK_BLOCK)) {
+                    if (player.getInventory().getItemInHand().getItemMeta() != null &&
+                            player.getInventory().getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(titleName) &&
+                            correctSlot != null && correctSlot.equals(inHand)) {
+                        ProjectUtils.sendCommands(
+                                player,
+                                Objects.requireNonNull(plugin.getConfiguration().getString("PLAYER_HEAD.CONFIGURATION.COMMANDS.TYPE")),
+                                plugin.getConfiguration().getStringList("PLAYER_HEAD.CONFIGURATION.COMMANDS.COMMAND")
+                        );
+                        ProjectUtils.sendSound(
+                                player,
+                                plugin.getConfiguration().getBoolean("PLAYER_HEAD.CONFIGURATION.SOUNDS.ENABLED"),
+                                plugin.getConfiguration().getString("PLAYER_HEAD.CONFIGURATION.SOUNDS.SOUND")
+                        );
+                    }
                 }
-            }
+            } catch (NullPointerException ignored) {}
+
         }
     }
 
@@ -69,11 +72,14 @@ public class headManager implements Listener {
 
             final String titleName = addColor.addColors(player, ProjectUtils.placeholderReplace(player, plugin.getConfiguration().getString("PLAYER_HEAD.PLAYER.ITEM.NAME")));
 
-            if (plugin.getConfiguration().getBoolean("PLAYER_HEAD.CONFIGURATION.BLOCK_PLACE")) {
-                if (event.getItemInHand().getItemMeta() != null && event.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(titleName)) {
-                    event.setCancelled(true);
+            try {
+                if (plugin.getConfiguration().getBoolean("PLAYER_HEAD.CONFIGURATION.BLOCK_PLACE")) {
+                    if (event.getItemInHand().getItemMeta() != null && event.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(titleName)) {
+                        event.setCancelled(true);
+                    }
                 }
-            }
+            } catch (NullPointerException ignored) {}
+
         }
     }
 
@@ -86,14 +92,17 @@ public class headManager implements Listener {
 
             final String titleName = addColor.addColors(player, ProjectUtils.placeholderReplace(player, plugin.getConfiguration().getString("PLAYER_HEAD.PLAYER.ITEM.NAME")));
 
-            if ((event.getCurrentItem() != null) &&
-                    (event.getCurrentItem().getItemMeta() != null) &&
-                    (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(titleName)) &&
-                    (plugin.getConfiguration().getBoolean("PLAYER_HEAD.CONFIGURATION.MOVE_DISABLE"))) {
-                if (!player.hasPermission("LobbyHeadItem.Admin")) {
-                    event.setCancelled(true);
+            try {
+                if ((event.getCurrentItem() != null) &&
+                        (event.getCurrentItem().getItemMeta() != null) &&
+                        (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(titleName)) &&
+                        (plugin.getConfiguration().getBoolean("PLAYER_HEAD.CONFIGURATION.MOVE_DISABLE"))) {
+                    if (!player.hasPermission("LobbyHeadItem.Admin")) {
+                        event.setCancelled(true);
+                    }
                 }
-            }
+            } catch (NullPointerException ignored) {}
+
         }
     }
 
@@ -138,12 +147,15 @@ public class headManager implements Listener {
 
             final String titleName = addColor.addColors(player, ProjectUtils.placeholderReplace(player, plugin.getConfiguration().getString("PLAYER_HEAD.PLAYER.ITEM.NAME")));
 
-            if (plugin.getConfiguration().getBoolean("PLAYER_HEAD.CONFIGURATION.NO_DROP_ON_DEATH")) {
-                event.getDrops().removeIf(i -> {
-                    Objects.requireNonNull(i.getItemMeta()).getDisplayName();
-                    return i.getItemMeta().getDisplayName().equalsIgnoreCase(titleName);
-                });
-            }
+            try {
+                if (plugin.getConfiguration().getBoolean("PLAYER_HEAD.CONFIGURATION.NO_DROP_ON_DEATH")) {
+                    event.getDrops().removeIf(i -> {
+                        Objects.requireNonNull(i.getItemMeta()).getDisplayName();
+                        return i.getItemMeta().getDisplayName().equalsIgnoreCase(titleName);
+                    });
+                }
+            } catch (NullPointerException ignored) {}
+
         }
     }
 
@@ -154,15 +166,19 @@ public class headManager implements Listener {
 
         if (plugin.getConfiguration().getBoolean("PLAYER_HEAD.ENABLED")) {
             plugin.getConfiguration().getStringList("PLAYER_HEAD.CONFIGURATION.WORLDS").forEach(action -> {
-                if (world.equalsIgnoreCase(action)) {
-                    ProjectUtils.scheduleSyncDelayedTask(10L, () -> generateItems.setupHead(player));
-                    return;
-                }
-                if (plugin.getConfiguration().getBoolean("PLAYER_HEAD.CONFIGURATION.REMOVE_WHEN_CHANGING_THE_WORLD")) {
-                    if (XMaterial.PLAYER_HEAD.parseMaterial() != null) {
-                        player.getInventory().remove(XMaterial.PLAYER_HEAD.parseMaterial());
+
+                try {
+                    if (world.equalsIgnoreCase(action)) {
+                        ProjectUtils.scheduleSyncDelayedTask(10L, () -> generateItems.setupHead(player));
+                        return;
                     }
-                }
+                    if (plugin.getConfiguration().getBoolean("PLAYER_HEAD.CONFIGURATION.REMOVE_WHEN_CHANGING_THE_WORLD")) {
+                        if (XMaterial.PLAYER_HEAD.parseMaterial() != null) {
+                            player.getInventory().remove(XMaterial.PLAYER_HEAD.parseMaterial());
+                        }
+                    }
+                } catch (NullPointerException ignored) {}
+
             });
         }
     }
