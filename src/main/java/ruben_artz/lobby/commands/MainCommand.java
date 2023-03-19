@@ -2,7 +2,6 @@ package ruben_artz.lobby.commands;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.google.common.collect.ImmutableList;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -41,7 +40,8 @@ public class MainCommand implements CommandExecutor, TabExecutor {
             if (args[0].equalsIgnoreCase("updatePlayerItems")) {
                 if (sender instanceof Player) {
                     final Player player = (Player) sender;
-                    deleteItems();
+
+                    deleteItems(player);
 
                     generateItems.setupItems(player);
                     generateItems.setupHead(player);
@@ -75,13 +75,13 @@ public class MainCommand implements CommandExecutor, TabExecutor {
                 Launcher.getLauncher().registerConfig();
 
                 if (sender instanceof Player) {
-                    deleteItems();
+                    Player player = (Player) sender;
 
-                    Bukkit.getOnlinePlayers().forEach(player -> {
-                        generateItems.setupItems(player);
-                        generateItems.setupHead(player);
-                        generateItems.setupBow(player);
-                    });
+                    deleteItems(player);
+
+                    generateItems.setupItems(player);
+                    generateItems.setupHead(player);
+                    generateItems.setupBow(player);
                 }
 
                 sender.sendMessage(addColor.addColors("&8&m-----------------------------------------------------"));
@@ -117,24 +117,22 @@ public class MainCommand implements CommandExecutor, TabExecutor {
         return completions;
     }
 
-    private void deleteItems() {
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            for (String key : Objects.requireNonNull(plugin.getItems().getConfigurationSection("ITEMS")).getKeys(false)) {
-                if (plugin.getItems().getBoolean("ITEMS." + key + ".SETTINGS.REMOVE_WHEN_CHANGING_THE_WORLD")) {
-                    player.getInventory().remove(Objects.requireNonNull(XMaterial.valueOf(plugin.getItems().getString("ITEMS." + key + ".ITEM")).parseMaterial()));
-                }
+    private void deleteItems(Player player) {
+        for (String key : Objects.requireNonNull(plugin.getItems().getConfigurationSection("ITEMS")).getKeys(false)) {
+            if (plugin.getItems().getBoolean("ITEMS." + key + ".SETTINGS.REMOVE_WHEN_CHANGING_THE_WORLD")) {
+                player.getInventory().remove(Objects.requireNonNull(XMaterial.valueOf(plugin.getItems().getString("ITEMS." + key + ".ITEM")).parseMaterial()));
             }
+        }
 
-            if (plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.REMOVE_WHEN_CHANGING_THE_WORLD")) {
-                if (XMaterial.BOW.parseMaterial() != null) player.getInventory().remove(XMaterial.BOW.parseMaterial());
-                if (XMaterial.ARROW.parseMaterial() != null) player.getInventory().remove(XMaterial.ARROW.parseMaterial());
-            }
+        if (plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.REMOVE_WHEN_CHANGING_THE_WORLD")) {
+            if (XMaterial.BOW.parseMaterial() != null) player.getInventory().remove(XMaterial.BOW.parseMaterial());
+            if (XMaterial.ARROW.parseMaterial() != null) player.getInventory().remove(XMaterial.ARROW.parseMaterial());
+        }
 
-            if (plugin.getConfiguration().getBoolean("PLAYER_HEAD.CONFIGURATION.REMOVE_WHEN_CHANGING_THE_WORLD")) {
-                if (XMaterial.PLAYER_HEAD.parseMaterial() != null) {
-                    player.getInventory().remove(XMaterial.PLAYER_HEAD.parseMaterial());
-                }
+        if (plugin.getConfiguration().getBoolean("PLAYER_HEAD.CONFIGURATION.REMOVE_WHEN_CHANGING_THE_WORLD")) {
+            if (XMaterial.PLAYER_HEAD.parseMaterial() != null) {
+                player.getInventory().remove(XMaterial.PLAYER_HEAD.parseMaterial());
             }
-        });
+        }
     }
 }
