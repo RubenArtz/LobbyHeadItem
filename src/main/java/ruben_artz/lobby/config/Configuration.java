@@ -77,7 +77,7 @@ public class Configuration {
         try {
             getFile(path).save(getFileData(path));
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
     }
 }

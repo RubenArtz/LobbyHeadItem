@@ -28,13 +28,13 @@ public class UpdateConfigs {
                     Launcher.getLauncher().registerConfig();
                     plugin.sendConsole("&cYour config.yml file was updated in this version!");
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException();
                 }
             }
             /*
             Update config of "items.yml"
              */
-            ProjectUtils.syncTaskLater(20L, () -> {
+            ProjectUtils.runTaskLater(20L, () -> {
                 if (!Objects.equals(plugin.getItems().getString("version"), "1.0")) {
                     try {
                         Files.copy(Paths.get(plugin.getDataFolder() + "/items.yml"), Paths.get(plugin.getDataFolder() + "/old-items-" + plugin.getConfig().getString("version") + ".yml"), StandardCopyOption.REPLACE_EXISTING);
@@ -43,7 +43,7 @@ public class UpdateConfigs {
                         Launcher.getLauncher().registerConfig();
                         plugin.sendConsole("&cYour items.yml file was updated in this version!");
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        throw new RuntimeException();
                     }
                 }
             });
