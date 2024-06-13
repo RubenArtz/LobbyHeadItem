@@ -1,9 +1,12 @@
 package ruben_artz.lobby.utils;
 
 import com.cryptomorin.xseries.XMaterial;
+import com.cryptomorin.xseries.XSkull;
 import com.cryptomorin.xseries.XSound;
 import com.cryptomorin.xseries.particles.ParticleDisplay;
+import com.cryptomorin.xseries.particles.Particles;
 import com.cryptomorin.xseries.particles.XParticle;
+import com.github.Anon8281.universalScheduler.bukkitScheduler.BukkitScheduler;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -15,12 +18,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 import ruben_artz.lobby.Lobby;
+import ruben_artz.lobby.launch.Launcher;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicLong;
 
-@SuppressWarnings("deprecation")
 public class ProjectUtils {
     private static final Lobby plugin = Lobby.getPlugin(Lobby.class);
 
@@ -79,9 +83,7 @@ public class ProjectUtils {
         pathLore.replaceAll(s -> addColor.addColors(player, ProjectUtils.placeholderReplace(player, s)));
         if (skullMeta != null) skullMeta.setLore(pathLore);
 
-        if (skullMeta != null) skullMeta.setOwner(player.getName());
-
-        if (item != null) item.setItemMeta(skullMeta);
+        if (item != null && skullMeta != null) item.setItemMeta(XSkull.of(skullMeta).profile(player).apply());
 
         player.getInventory().setItem(slot - 1, item);
     }
@@ -127,8 +129,6 @@ public class ProjectUtils {
         if (itemArrow != null) itemArrow.setItemMeta(itemMetaArrow);
 
         player.getInventory().setItem(slot, itemArrow);
-
-        player.updateInventory();
     }
 
     public static boolean getWorldsItems(final Player player, final List<String> worldList) {
@@ -158,33 +158,31 @@ public class ProjectUtils {
 
     public static void sendSound(final Player player, final boolean isEnabled, final String soundName) {
         if (isEnabled) {
-            XSound.play(player, soundName);
+            if (player != null) XSound.play(soundName, soundPlayer -> soundPlayer.forPlayers(player));
         }
     }
 
     public static void sendParticles(final Player player, Particle... particles) {
-        Arrays.stream(particles).forEach(s -> runTaskTimerTick(() -> XParticle.circle(2, 20, ParticleDisplay.display(player.getLocation(), s))));
+        Arrays.stream(particles).forEach(s -> runTaskTimerTick(() -> Particles.circle(2, 20, ParticleDisplay.of(XParticle.of(s)).withLocation(player.getLocation()))));
     }
 
     private static void runTaskTimerTick(final Runnable runnable) {
-        Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
-            int time = 2;
+        BukkitScheduler bukkitScheduler = new BukkitScheduler(plugin);
+        AtomicLong repeater = new AtomicLong(5);
 
-            @Override
-            public void run() {
-                if (this.time == 0) return;
-                runnable.run();
-                this.time--;
-            }
+        bukkitScheduler.runTaskTimer(() -> {
+
+            runnable.run();
+            repeater.addAndGet(-40L);
+            if (repeater.get() < 0L) bukkitScheduler.cancelTasks();
         }, 0L, 7L);
     }
+
     public static void syncRunTask(Runnable runnable) {
-        Bukkit.getScheduler().runTask(plugin, runnable);
+        Launcher.getScheduler().runTask(runnable);
     }
-    public static void scheduleSyncDelayedTask(long time, Runnable runnable) {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, runnable, time);
-    }
-    public static void syncTaskLater(long delay, Runnable runnable) {
-        Bukkit.getScheduler().runTaskLater(plugin, runnable, delay);
+
+    public static void runTaskLater(long delay, Runnable runnable) {
+        Launcher.getScheduler().runTaskLater(runnable, delay);
     }
 }
