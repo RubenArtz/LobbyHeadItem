@@ -5,7 +5,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import ruben_artz.lobby.launch.Launch;
 import ruben_artz.lobby.launch.Launcher;
-import ruben_artz.lobby.utils.ProjectUtils;
 import ruben_artz.lobby.utils.addColor;
 
 import java.util.ArrayList;
@@ -22,9 +21,10 @@ public final class Lobby extends JavaPlugin {
     public void onEnable() {
         try {
             this.launch = Class.forName("ruben_artz.lobby.launch.Launcher").asSubclass(Launch.class).newInstance();
-            ProjectUtils.syncRunTask(() -> launch.launch());
+
+            launch.launch();
         } catch (InstantiationException|IllegalAccessException|ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
     }
 

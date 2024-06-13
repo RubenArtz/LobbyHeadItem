@@ -118,7 +118,7 @@ public class bowManager implements Listener {
 
                 try {
                     if (world.equalsIgnoreCase(action)) {
-                        ProjectUtils.scheduleSyncDelayedTask(10L, () -> generateItems.setupBow(player));
+                        ProjectUtils.runTaskLater(10L, () -> generateItems.setupBow(player));
                         return;
                     }
                     if (plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.REMOVE_WHEN_CHANGING_THE_WORLD")) {

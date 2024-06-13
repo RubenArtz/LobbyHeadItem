@@ -169,7 +169,7 @@ public class headManager implements Listener {
 
                 try {
                     if (world.equalsIgnoreCase(action)) {
-                        ProjectUtils.scheduleSyncDelayedTask(10L, () -> generateItems.setupHead(player));
+                        ProjectUtils.runTaskLater(10L, () -> generateItems.setupHead(player));
                         return;
                     }
                     if (plugin.getConfiguration().getBoolean("PLAYER_HEAD.CONFIGURATION.REMOVE_WHEN_CHANGING_THE_WORLD")) {

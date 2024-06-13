@@ -159,7 +159,7 @@ public class itemsManager implements Listener {
                 try {
                     plugin.getItems().getStringList("ITEMS." + key + ".WORLDS").forEach(action -> {
                         if (world.equalsIgnoreCase(action)) {
-                            ProjectUtils.scheduleSyncDelayedTask(10L, () -> generateItems.setupItems(player));
+                            ProjectUtils.runTaskLater(10L, () -> generateItems.setupItems(player));
                             return;
                         }
                         if (plugin.getItems().getBoolean("ITEMS." + key + ".SETTINGS.REMOVE_WHEN_CHANGING_THE_WORLD")) {

@@ -1,5 +1,8 @@
 package ruben_artz.lobby.launch;
 
+import com.github.Anon8281.universalScheduler.UniversalScheduler;
+import com.github.Anon8281.universalScheduler.scheduling.schedulers.TaskScheduler;
+import lombok.Getter;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SingleLineChart;
 import org.bukkit.Bukkit;
@@ -19,15 +22,18 @@ import java.util.Objects;
 
 public class Launcher implements Launch {
     private final Lobby plugin = Lobby.getPlugin(Lobby.class);
-    private static Launcher launcher;
-    public static Launcher getLauncher() {
-        return launcher;
-    }
+
+    @Getter private static Launcher launcher;
+    @Getter private static TaskScheduler scheduler;
+
     public Configuration config;
 
     @Override
     public void launch() {
         launcher = this;
+
+        scheduler = UniversalScheduler.getScheduler(plugin);
+
         this.registerConfig();
         this.updateConfigs();
         this.registerEvents();
@@ -71,12 +77,12 @@ public class Launcher implements Launch {
     }
 
     public void startPlugin() {
-        plugin.sendConsole("" + plugin.prefix + "&aSuccessfully enabled &cv" + plugin.getDescription().getVersion() + "");
+        plugin.sendConsole(plugin.prefix + "&aSuccessfully enabled &cv" + plugin.getDescription().getVersion());
         plugin.sendConsole("&8--------------------------------------------------------------------------------------");
         plugin.sendConsole("&7         Developed by &cRuben_Artz");
-        plugin.sendConsole("" + plugin.prefix + "&aVersion: &c" + plugin.getDescription().getVersion() + " &ais loading... &8(&6Current&8)");
-        plugin.sendConsole("" + plugin.prefix + "&aServer: &c"+Bukkit.getVersion()+"");
-        plugin.sendConsole("" + plugin.prefix + "&aLoading necessary files...");
+        plugin.sendConsole(plugin.prefix + "&aVersion: &c" + plugin.getDescription().getVersion() + " &ais loading... &8(&6Current&8)");
+        plugin.sendConsole(plugin.prefix + "&aServer: &c"+Bukkit.getVersion());
+        plugin.sendConsole(plugin.prefix + "&aLoading necessary files...");
         plugin.sendConsole(" ");
         plugin.sendConsole("&fLobby Head Item Starting plugin...");
         plugin.sendConsole( "&f");
