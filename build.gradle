@@ -4,7 +4,9 @@ plugins {
 }
 
 group = 'ruben_artz.lobby'
-version = '1.4.19'
+version = '1.5.20'
+
+def lombokVer = '1.18.30'
 
 repositories {
     mavenCentral()
@@ -20,16 +22,32 @@ repositories {
         name = 'jitpack.io'
         url = 'https://jitpack.io'
     }
+
+    maven { url 'https://libraries.minecraft.net' }
     maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
 }
 
 dependencies {
+    compileOnly "org.projectlombok:lombok:$lombokVer"
+
+    compileOnly("com.mojang:authlib:1.5.25")
     compileOnly 'org.jetbrains:annotations:23.0.0'
     compileOnly 'me.clip:placeholderapi:2.11.2'
-    compileOnly 'org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT'
+    compileOnly "org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT"
+
+    annotationProcessor "org.projectlombok:lombok:$lombokVer"
 
     implementation 'org.bstats:bstats-bukkit:3.0.0'
-    implementation 'com.github.cryptomorin:XSeries:9.1.0'
+    /*
+    Keep up to date
+    Url: https://github.com/CryptoMorin/XSeries/releases
+     */
+    implementation 'com.github.cryptomorin:XSeries:11.0.0'
+    /*
+    Keep up to date
+    Url: https://github.com/Anon8281/UniversalScheduler
+     */
+    implementation 'com.github.Anon8281:UniversalScheduler:0.1.6'
 }
 
 java {
@@ -42,8 +60,22 @@ shadowJar {
 
     relocate("org.bstats", "ruben_artz.lobby.libraries.bstats")
     relocate("com.cryptomorin.xseries", "ruben_artz.lobby.libraries.xseries")
-}
+    relocate 'com.github.Anon8281.universalScheduler', 'ruben_artz.lobby.libraries.universalScheduler'
 
+    exclude("com/cryptomorin/xseries/abstractions/**")
+    exclude("com/cryptomorin/xseries/messages/**")
+
+    exclude("com/cryptomorin/xseries/NoteBlockMusic*")
+    exclude("com/cryptomorin/xseries/XBiome*")
+    exclude("com/cryptomorin/xseries/XBlock*")
+    exclude("com/cryptomorin/xseries/XEnchantment*")
+    exclude("com/cryptomorin/xseries/XEntity*")
+    exclude("com/cryptomorin/xseries/XEntityType*")
+    exclude("com/cryptomorin/xseries/XItemStack*")
+    exclude("com/cryptomorin/xseries/XPotion*")
+    exclude("com/cryptomorin/xseries/XTag*")
+    exclude("com/cryptomorin/xseries/XWorldBorder*")
+}
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
