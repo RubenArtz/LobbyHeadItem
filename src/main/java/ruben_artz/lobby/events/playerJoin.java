@@ -5,7 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import ruben_artz.lobby.events.utils.generateItems;
+import ruben_artz.lobby.utils.generateItems;
 
 public class playerJoin implements Listener {
 

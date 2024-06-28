@@ -11,11 +11,8 @@ import ruben_artz.lobby.Lobby;
 import ruben_artz.lobby.commands.MainCommand;
 import ruben_artz.lobby.config.Configuration;
 import ruben_artz.lobby.config.UpdateConfigs;
-import ruben_artz.lobby.events.bow.bowManager;
-import ruben_artz.lobby.events.bow.playerTeleport;
-import ruben_artz.lobby.events.head.headManager;
-import ruben_artz.lobby.events.items.itemsManager;
 import ruben_artz.lobby.events.playerJoin;
+import ruben_artz.lobby.utils.ProjectUtils;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -53,12 +50,50 @@ public class Launcher implements Launch {
 
     private void registerEvents() {
         final PluginManager event = plugin.getServer().getPluginManager();
+
+        event.registerEvents(new playerJoin(), plugin);
+
+        /*
+        create items
+         */
         Arrays.asList(
-                new playerJoin(),
-                new playerTeleport(),
-                new itemsManager(),
-                new headManager(),
-                new bowManager()).forEach(li -> event.registerEvents(li, plugin));
+                new ruben_artz.lobby.events.items.PlayerInteract(),
+                new ruben_artz.lobby.events.items.PlayerInventoryClick(),
+                new ruben_artz.lobby.events.items.PlayerDropItem(),
+                new ruben_artz.lobby.events.items.PlayerRespawn(),
+                new ruben_artz.lobby.events.items.PlayerDeath(),
+                new ruben_artz.lobby.events.items.PlayerChangedWorld()).forEach(li -> event.registerEvents(li, plugin));
+
+        /*
+        player head
+         */
+        Arrays.asList(
+                new ruben_artz.lobby.events.head.PlayerBlockPlace(),
+                new ruben_artz.lobby.events.head.PlayerChangedWorld(),
+                new ruben_artz.lobby.events.head.PlayerDeath(),
+                new ruben_artz.lobby.events.head.PlayerDropItem(),
+                new ruben_artz.lobby.events.head.PlayerInteract(),
+                new ruben_artz.lobby.events.head.PlayerInventoryClick(),
+                new ruben_artz.lobby.events.head.PlayerRespawn()).forEach(li -> event.registerEvents(li, plugin));
+
+        /*
+        player bow
+         */
+        Arrays.asList(
+                new ruben_artz.lobby.events.bow.EntityDamage(),
+                new ruben_artz.lobby.events.bow.PlayerChangedWorld(),
+                new ruben_artz.lobby.events.bow.PlayerDeath(),
+                new ruben_artz.lobby.events.bow.PlayerDropItem(),
+                new ruben_artz.lobby.events.bow.PlayerInventoryClick(),
+                new ruben_artz.lobby.events.bow.PlayerProjectileHit(),
+                new ruben_artz.lobby.events.bow.PlayerRespawn()).forEach(li -> event.registerEvents(li, plugin));
+
+        if (ProjectUtils.isVersion_1_9_To_1_21()) {
+            Arrays.asList(
+                    new ruben_artz.lobby.events.items.PlayerSwapHandItems(),
+                    new ruben_artz.lobby.events.head.PlayerSwapHandItems(),
+                    new ruben_artz.lobby.events.bow.PlayerSwapHandItems()).forEach(li -> event.registerEvents(li, plugin));
+        }
     }
 
     public void registerConfig() {

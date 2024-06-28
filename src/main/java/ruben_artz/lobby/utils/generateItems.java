@@ -1,8 +1,7 @@
-package ruben_artz.lobby.events.utils;
+package ruben_artz.lobby.utils;
 
 import org.bukkit.entity.Player;
 import ruben_artz.lobby.Lobby;
-import ruben_artz.lobby.utils.ProjectUtils;
 
 import java.util.Objects;
 

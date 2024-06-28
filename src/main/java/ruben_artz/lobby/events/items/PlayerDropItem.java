@@ -1,0 +1,40 @@
+package ruben_artz.lobby.events.items;
+
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.inventory.ItemStack;
+import ruben_artz.lobby.Lobby;
+import ruben_artz.lobby.utils.ProjectUtils;
+import ruben_artz.lobby.utils.addColor;
+
+import java.util.Objects;
+
+public class PlayerDropItem implements Listener {
+    private static final Lobby plugin = Lobby.getPlugin(Lobby.class);
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerDropItemEvent(PlayerDropItemEvent event) {
+        final Player player = event.getPlayer();
+        final ItemStack itemStack = event.getItemDrop().getItemStack();
+        final String getDisplayName = Objects.requireNonNull(itemStack.getItemMeta()).getDisplayName();
+
+        for (String key : Objects.requireNonNull(plugin.getItems().getConfigurationSection("ITEMS")).getKeys(false)) {
+            if (plugin.getItems().getBoolean("ITEMS." + key + ".ENABLED")) {
+                if (!ProjectUtils.getWorldsItems(player, plugin.getItems().getStringList("ITEMS." + key + ".WORLDS"))) return;
+
+                final String titleName = addColor.addColors(player, ProjectUtils.placeholderReplace(player, plugin.getItems().getString("ITEMS." + key + ".NAME")));
+
+                if ((itemStack.hasItemMeta()) &&
+                        (getDisplayName.equalsIgnoreCase(titleName)) &&
+                        (plugin.getItems().getBoolean("ITEMS." + key + ".SETTINGS.NO_DROP_ITEM"))) {
+                    if (!player.hasPermission("LobbyHeadItem.Admin")) {
+                        event.setCancelled(true);
+                    }
+                }
+            }
+        }
+    }
+}

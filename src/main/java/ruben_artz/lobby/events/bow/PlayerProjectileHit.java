@@ -3,16 +3,17 @@ package ruben_artz.lobby.events.bow;
 import com.cryptomorin.xseries.XSound;
 import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import ruben_artz.lobby.Lobby;
 import ruben_artz.lobby.utils.ProjectUtils;
 
-public class playerTeleport implements Listener {
+public class PlayerProjectileHit implements Listener {
     private static final Lobby plugin = Lobby.getPlugin(Lobby.class);
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -40,17 +41,6 @@ public class playerTeleport implements Listener {
             ProjectUtils.runTaskLater(50L, () -> plugin.playerUUIDs.removeIf(u -> u.equals(event.getEntity().getUniqueId())));
 
             if (event.getEntityType() == EntityType.ARROW) event.getEntity().remove();
-        }
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onEntityDamageEvent(EntityDamageEvent event) {
-        if (!(event.getEntity() instanceof Player) && !(event.getEntity() instanceof Pig) && !(event.getEntity() instanceof Horse)) return;
-        if (event.getCause() != EntityDamageEvent.DamageCause.FALL) return;
-
-        if (plugin.playerUUIDs.stream().anyMatch(u -> u.equals(event.getEntity().getUniqueId()))) {
-            event.setCancelled(true);
-            plugin.playerUUIDs.removeIf(u -> u.equals(event.getEntity().getUniqueId()));
         }
     }
 }

@@ -11,7 +11,7 @@ import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ruben_artz.lobby.Lobby;
-import ruben_artz.lobby.events.utils.generateItems;
+import ruben_artz.lobby.utils.generateItems;
 import ruben_artz.lobby.launch.Launcher;
 import ruben_artz.lobby.utils.addColor;
 

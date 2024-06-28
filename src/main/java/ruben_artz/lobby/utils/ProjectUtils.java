@@ -1,11 +1,12 @@
 package ruben_artz.lobby.utils;
 
 import com.cryptomorin.xseries.XMaterial;
-import com.cryptomorin.xseries.XSkull;
 import com.cryptomorin.xseries.XSound;
 import com.cryptomorin.xseries.particles.ParticleDisplay;
 import com.cryptomorin.xseries.particles.Particles;
 import com.cryptomorin.xseries.particles.XParticle;
+import com.cryptomorin.xseries.profiles.builder.XSkull;
+import com.cryptomorin.xseries.profiles.objects.Profileable;
 import com.github.Anon8281.universalScheduler.bukkitScheduler.BukkitScheduler;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
@@ -83,7 +84,7 @@ public class ProjectUtils {
         pathLore.replaceAll(s -> addColor.addColors(player, ProjectUtils.placeholderReplace(player, s)));
         if (skullMeta != null) skullMeta.setLore(pathLore);
 
-        if (item != null && skullMeta != null) item.setItemMeta(XSkull.of(skullMeta).profile(player).apply());
+        if (item != null && skullMeta != null) item.setItemMeta(XSkull.of(skullMeta).profile(Profileable.of(player)).apply());
 
         player.getInventory().setItem(slot - 1, item);
     }
@@ -184,5 +185,21 @@ public class ProjectUtils {
 
     public static void runTaskLater(long delay, Runnable runnable) {
         Launcher.getScheduler().runTaskLater(runnable, delay);
+    }
+
+    public static boolean isVersion_1_9_To_1_21() {
+        return Bukkit.getVersion().contains("1.9") ||
+                Bukkit.getVersion().contains("1.10") ||
+                Bukkit.getVersion().contains("1.11") ||
+                Bukkit.getVersion().contains("1.12") ||
+                Bukkit.getVersion().contains("1.13") ||
+                Bukkit.getVersion().contains("1.14") ||
+                Bukkit.getVersion().contains("1.15") ||
+                Bukkit.getVersion().contains("1.16") ||
+                Bukkit.getVersion().contains("1.17") ||
+                Bukkit.getVersion().contains("1.18") ||
+                Bukkit.getVersion().contains("1.19") ||
+                Bukkit.getVersion().contains("1.20") ||
+                Bukkit.getVersion().contains("1.21");
     }
 }
