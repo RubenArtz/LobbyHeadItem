@@ -4,9 +4,11 @@ plugins {
 }
 
 group = 'ruben_artz.lobby'
-version = '1.5.20'
+version = '1.6.21'
 
 def lombokVer = '1.18.30'
+
+registerOutputTask('Ruben_Artz', 'D:\\Ruben_Artz\\STN Studios\\Development\\plugins')
 
 repositories {
     mavenCentral()
@@ -42,7 +44,7 @@ dependencies {
     Keep up to date
     Url: https://github.com/CryptoMorin/XSeries/releases
      */
-    implementation 'com.github.cryptomorin:XSeries:11.0.0'
+    implementation 'com.github.cryptomorin:XSeries:11.2.0'
     /*
     Keep up to date
     Url: https://github.com/Anon8281/UniversalScheduler
@@ -87,5 +89,18 @@ processResources {
     filteringCharset 'UTF-8'
     filesMatching('plugin.yml') {
         expand props
+    }
+}
+
+def registerOutputTask(name, path) {
+    if (!System.properties['os.name'].toLowerCase().contains('windows')) {
+        return
+    }
+
+    tasks.register('build' + name, Copy) {
+        group = 'build plugin'
+        dependsOn tasks.shadowJar
+        from tasks.shadowJar.archiveFile
+        into file(path)
     }
 }
