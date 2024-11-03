@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'ruben_artz.lobby'
-version = '1.7.21'
+version = '1.8.21'
 
 def lombokVer = '1.18.30'
 
@@ -44,7 +44,7 @@ dependencies {
     Keep up to date
     Url: https://github.com/CryptoMorin/XSeries/releases
      */
-    implementation 'com.github.cryptomorin:XSeries:11.2.1'
+    implementation 'com.github.cryptomorin:XSeries:11.3.0'
     /*
     Keep up to date
     Url: https://github.com/Anon8281/UniversalScheduler
