@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
+@SuppressWarnings("deprecation")
 public class ProjectUtils {
     private static final Lobby plugin = Lobby.getPlugin(Lobby.class);
 
@@ -109,7 +110,16 @@ public class ProjectUtils {
             if (itemMetaBow != null) itemMetaBow.setUnbreakable(true);
         } catch (NoSuchMethodError ignored) {}
 
-        if (itemMetaBow != null) itemMetaBow.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
+        Enchantment infinityEnchantment;
+
+        infinityEnchantment = Enchantment.getByName("INFINITY");
+        if (infinityEnchantment == null) {
+            infinityEnchantment = Enchantment.getByName("ARROW_INFINITE");
+        }
+
+        if (infinityEnchantment != null) {
+            if (itemMetaBow != null) itemMetaBow.addEnchant(infinityEnchantment, 1, true);
+        }
 
         if (itemBow != null) itemBow.setItemMeta(itemMetaBow);
 
