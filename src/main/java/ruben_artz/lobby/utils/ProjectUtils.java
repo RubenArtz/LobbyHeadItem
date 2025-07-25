@@ -85,7 +85,7 @@ public class ProjectUtils {
         pathLore.replaceAll(s -> addColor.addColors(player, ProjectUtils.placeholderReplace(player, s)));
         if (skullMeta != null) skullMeta.setLore(pathLore);
 
-        if (item != null && skullMeta != null) item.setItemMeta(XSkull.of(skullMeta).profile(Profileable.of(player)).apply());
+        if (item != null && skullMeta != null) item.setItemMeta(XSkull.of(skullMeta).profile(Profileable.of(player.getUniqueId())).apply());
 
         player.getInventory().setItem(slot - 1, item);
     }
