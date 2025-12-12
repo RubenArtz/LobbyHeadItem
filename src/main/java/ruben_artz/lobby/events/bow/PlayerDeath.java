@@ -20,7 +20,8 @@ public class PlayerDeath implements Listener {
         final String titleBow = addColor.addColors(player, ProjectUtils.placeholderReplace(player, plugin.getConfiguration().getString("PLAYER_BOW.BOW.NAME")));
         final String titleArrow = addColor.addColors(player, ProjectUtils.placeholderReplace(player, plugin.getConfiguration().getString("PLAYER_BOW.ARROW.NAME")));
         if (plugin.getConfiguration().getBoolean("PLAYER_BOW.ENABLED")) {
-            if (!ProjectUtils.getWorldsItems(player, plugin.getConfiguration().getStringList("PLAYER_BOW.CONFIGURATION.WORLDS"))) return;
+            if (!ProjectUtils.getWorldsItems(player, plugin.getConfiguration().getStringList("PLAYER_BOW.CONFIGURATION.WORLDS")))
+                return;
 
             if (plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.NO_DROP_ON_DEATH")) {
 
@@ -30,7 +31,8 @@ public class PlayerDeath implements Listener {
                         return i.getItemMeta().getDisplayName().equalsIgnoreCase(titleBow)
                                 || i.getItemMeta().getDisplayName().equalsIgnoreCase(titleArrow);
                     });
-                } catch (NullPointerException ignored) {}
+                } catch (NullPointerException ignored) {
+                }
 
             }
         }

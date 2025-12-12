@@ -13,9 +13,9 @@ import java.util.Map;
 @SuppressWarnings({"ConstantConditions", "ResultOfMethodCallIgnored"})
 public class Configuration {
     private final Lobby plugin = Lobby.getPlugin(Lobby.class);
+    private final YamlConfiguration langFile = null;
     private Map<String, YamlConfiguration> files;
     private Map<String, File> filesData;
-    private YamlConfiguration langFile = null;
 
     public Configuration initiate(String... fileNames) {
         this.files = new HashMap<>();

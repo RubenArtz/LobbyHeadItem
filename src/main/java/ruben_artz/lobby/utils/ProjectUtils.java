@@ -24,10 +24,12 @@ import ruben_artz.lobby.launch.Launcher;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
 @SuppressWarnings("deprecation")
 public class ProjectUtils {
+    public static final String DEFAULT_UUID = "3a730223-120a-4b66-8e1f-3e5a5125875c";
     private static final Lobby plugin = Lobby.getPlugin(Lobby.class);
 
     public static String setPlaceholders(OfflinePlayer player, String text) {
@@ -61,9 +63,10 @@ public class ProjectUtils {
         ItemStack item = mat.parseItem();
         ItemMeta meta = item != null ? item.getItemMeta() : null;
 
-        if (meta != null) meta.setDisplayName(addColor.addColors(player, ProjectUtils.placeholderReplace(player, name)));
+        if (meta != null)
+            meta.setDisplayName(addColor.addColors(player, ProjectUtils.placeholderReplace(player, name)));
 
-        lore.replaceAll(s -> addColor.addColors(player, ProjectUtils.placeholderReplace(player , s)));
+        lore.replaceAll(s -> addColor.addColors(player, ProjectUtils.placeholderReplace(player, s)));
         if (meta != null) meta.setLore(lore);
 
         if (item != null) item.setItemMeta(meta);
@@ -80,12 +83,19 @@ public class ProjectUtils {
         ItemStack item = XMaterial.PLAYER_HEAD.parseItem();
         SkullMeta skullMeta = (SkullMeta) (item != null ? item.getItemMeta() : null);
 
-        if (skullMeta != null) skullMeta.setDisplayName(addColor.addColors(player, ProjectUtils.placeholderReplace(player, pathName)));
+        if (skullMeta != null)
+            skullMeta.setDisplayName(addColor.addColors(player, ProjectUtils.placeholderReplace(player, pathName)));
 
         pathLore.replaceAll(s -> addColor.addColors(player, ProjectUtils.placeholderReplace(player, s)));
         if (skullMeta != null) skullMeta.setLore(pathLore);
 
-        if (item != null && skullMeta != null) item.setItemMeta(XSkull.of(skullMeta).profile(Profileable.of(player.getUniqueId())).apply());
+        if (item != null && skullMeta != null) {
+            try {
+                item.setItemMeta(XSkull.of(skullMeta).profile(Profileable.of(player.getUniqueId())).apply());
+            } catch (Exception exception) {
+                item.setItemMeta(XSkull.of(skullMeta).profile(Profileable.of(UUID.fromString(DEFAULT_UUID))).apply());
+            }
+        }
 
         player.getInventory().setItem(slot - 1, item);
     }
@@ -104,11 +114,13 @@ public class ProjectUtils {
 
         if (itemMetaBow != null) itemMetaBow.setLore(lore);
 
-        if (itemMetaBow != null) itemMetaBow.setDisplayName(addColor.addColors(player, ProjectUtils.placeholderReplace(player, name)));
+        if (itemMetaBow != null)
+            itemMetaBow.setDisplayName(addColor.addColors(player, ProjectUtils.placeholderReplace(player, name)));
 
         try {
             if (itemMetaBow != null) itemMetaBow.setUnbreakable(true);
-        } catch (NoSuchMethodError ignored) {}
+        } catch (NoSuchMethodError ignored) {
+        }
 
         Enchantment infinityEnchantment;
 
@@ -135,7 +147,8 @@ public class ProjectUtils {
         final ItemStack itemArrow = XMaterial.valueOf(item).parseItem();
         final ItemMeta itemMetaArrow = itemArrow != null ? itemArrow.getItemMeta() : null;
 
-        if (itemMetaArrow != null) itemMetaArrow.setDisplayName(addColor.addColors(player, ProjectUtils.placeholderReplace(player, name)));
+        if (itemMetaArrow != null)
+            itemMetaArrow.setDisplayName(addColor.addColors(player, ProjectUtils.placeholderReplace(player, name)));
 
         if (itemArrow != null) itemArrow.setItemMeta(itemMetaArrow);
 
@@ -155,13 +168,13 @@ public class ProjectUtils {
     }
 
     public static void sendCommands(@NotNull Player player, @NotNull String typeCommand, @NotNull List<String> commands) {
-        switch(typeCommand) {
+        switch (typeCommand) {
             case "PLAYER": {
                 commands.forEach(s -> Bukkit.dispatchCommand(player, placeholderReplace(player, s)));
                 break;
             }
             case "CONSOLE": {
-                commands.forEach(s ->  Bukkit.dispatchCommand(Bukkit.getConsoleSender(), placeholderReplace(player, s)));
+                commands.forEach(s -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), placeholderReplace(player, s)));
                 break;
             }
         }

@@ -27,10 +27,11 @@ public class PlayerChangedWorld implements Listener {
                         return;
                     }
                     if (plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.REMOVE_WHEN_CHANGING_THE_WORLD")) {
-                        if (XMaterial.BOW.parseMaterial() != null) player.getInventory().remove(XMaterial.BOW.parseMaterial());
-                        if (XMaterial.ARROW.parseMaterial() != null) player.getInventory().remove(XMaterial.ARROW.parseMaterial());
+                        if (XMaterial.BOW.get() != null) player.getInventory().remove(XMaterial.BOW.get());
+                        if (XMaterial.ARROW.get() != null) player.getInventory().remove(XMaterial.ARROW.get());
                     }
-                } catch (NullPointerException ignored) {}
+                } catch (NullPointerException ignored) {
+                }
 
             });
         }

@@ -11,9 +11,9 @@ import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ruben_artz.lobby.Lobby;
-import ruben_artz.lobby.utils.generateItems;
 import ruben_artz.lobby.launch.Launcher;
 import ruben_artz.lobby.utils.addColor;
+import ruben_artz.lobby.utils.generateItems;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -100,7 +100,8 @@ public class MainCommand implements CommandExecutor, TabExecutor {
     }
 
 
-    @Override @Nullable
+    @Override
+    @Nullable
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         final List<String> completions = new ArrayList<>();
         final List<String> commands = new ArrayList<>();
@@ -120,18 +121,18 @@ public class MainCommand implements CommandExecutor, TabExecutor {
     private void deleteItems(Player player) {
         for (String key : Objects.requireNonNull(plugin.getItems().getConfigurationSection("ITEMS")).getKeys(false)) {
             if (plugin.getItems().getBoolean("ITEMS." + key + ".SETTINGS.REMOVE_WHEN_CHANGING_THE_WORLD")) {
-                player.getInventory().remove(Objects.requireNonNull(XMaterial.valueOf(plugin.getItems().getString("ITEMS." + key + ".ITEM")).parseMaterial()));
+                player.getInventory().remove(Objects.requireNonNull(XMaterial.valueOf(plugin.getItems().getString("ITEMS." + key + ".ITEM")).get()));
             }
         }
 
         if (plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.REMOVE_WHEN_CHANGING_THE_WORLD")) {
-            if (XMaterial.BOW.parseMaterial() != null) player.getInventory().remove(XMaterial.BOW.parseMaterial());
-            if (XMaterial.ARROW.parseMaterial() != null) player.getInventory().remove(XMaterial.ARROW.parseMaterial());
+            if (XMaterial.BOW.get() != null) player.getInventory().remove(XMaterial.BOW.get());
+            if (XMaterial.ARROW.get() != null) player.getInventory().remove(XMaterial.ARROW.get());
         }
 
         if (plugin.getConfiguration().getBoolean("PLAYER_HEAD.CONFIGURATION.REMOVE_WHEN_CHANGING_THE_WORLD")) {
-            if (XMaterial.PLAYER_HEAD.parseMaterial() != null) {
-                player.getInventory().remove(XMaterial.PLAYER_HEAD.parseMaterial());
+            if (XMaterial.PLAYER_HEAD.get() != null) {
+                player.getInventory().remove(XMaterial.PLAYER_HEAD.get());
             }
         }
     }

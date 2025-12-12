@@ -22,7 +22,8 @@ public class PlayerSwapHandItems implements Listener {
 
         try {
             if (plugin.getConfiguration().getBoolean("PLAYER_BOW.ENABLED")) {
-                if (!ProjectUtils.getWorldsItems(player, plugin.getConfiguration().getStringList("PLAYER_BOW.CONFIGURATION.WORLDS"))) return;
+                if (!ProjectUtils.getWorldsItems(player, plugin.getConfiguration().getStringList("PLAYER_BOW.CONFIGURATION.WORLDS")))
+                    return;
 
                 final String titleBow = addColor.addColors(player, ProjectUtils.placeholderReplace(player, plugin.getConfiguration().getString("PLAYER_BOW.BOW.NAME")));
 
@@ -33,6 +34,7 @@ public class PlayerSwapHandItems implements Listener {
                     event.setCancelled(true);
                 }
             }
-        } catch (NullPointerException ignored) {}
+        } catch (NullPointerException ignored) {
+        }
     }
 }

@@ -5,8 +5,8 @@
 name: 'LobbyHeadItem'
 version: '${version}'
 main: 'ruben_artz.lobby.Lobby'
-authors: ['Ruben_Artz', 'STN Studios']
-softdepend: ['PlaceholderAPI']
+authors: [ 'Ruben_Artz', 'STN Studios' ]
+softdepend: [ 'PlaceholderAPI' ]
 website: 'https://www.spigotmc.org/resources/62507/'
 description: 'Show the head of the game in the lobby!'
 api-version: '1.16'
@@ -14,4 +14,4 @@ api-version: '1.16'
 commands:
   lobbyheaditem:
     description: 'Main command of this plugin.'
-    aliases: ['lob']
+    aliases: [ 'lob' ]

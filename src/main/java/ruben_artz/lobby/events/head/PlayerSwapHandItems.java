@@ -22,7 +22,8 @@ public class PlayerSwapHandItems implements Listener {
 
         try {
             if (plugin.getConfiguration().getBoolean("PLAYER_HEAD.ENABLED")) {
-                if (!ProjectUtils.getWorldsItems(player, plugin.getConfiguration().getStringList("PLAYER_HEAD.CONFIGURATION.WORLDS"))) return;
+                if (!ProjectUtils.getWorldsItems(player, plugin.getConfiguration().getStringList("PLAYER_HEAD.CONFIGURATION.WORLDS")))
+                    return;
 
                 final String titleName = addColor.addColors(player, ProjectUtils.placeholderReplace(player, plugin.getConfiguration().getString("PLAYER_HEAD.PLAYER.ITEM.NAME")));
 
@@ -34,6 +35,7 @@ public class PlayerSwapHandItems implements Listener {
                     event.setCancelled(true);
                 }
             }
-        } catch (NullPointerException ignored) {}
+        } catch (NullPointerException ignored) {
+        }
     }
 }

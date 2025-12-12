@@ -29,13 +29,15 @@ public class PlayerProjectileHit implements Listener {
 
             if (player != null) plugin.playerUUIDs.add(player.getUniqueId());
             if (player != null) player.teleport(location);
-            if (player != null) XSound.play(plugin.getConfiguration().getString("PLAYER_BOW.CONFIGURATION.SOUND_TELEPORT"), soundPlayer -> soundPlayer.forPlayers(player));
+            if (player != null)
+                XSound.play(plugin.getConfiguration().getString("PLAYER_BOW.CONFIGURATION.SOUND_TELEPORT"), soundPlayer -> soundPlayer.forPlayers(player));
 
             if (plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.PARTICLES.ENABLED")) {
 
                 try {
                     plugin.getConfiguration().getStringList("PLAYER_BOW.CONFIGURATION.PARTICLES.LIST").forEach(s -> ProjectUtils.sendParticles(player, Particle.valueOf(s)));
-                } catch (NoClassDefFoundError ignored) {}
+                } catch (NoClassDefFoundError ignored) {
+                }
 
             }
             ProjectUtils.runTaskLater(50L, () -> plugin.playerUUIDs.removeIf(u -> u.equals(event.getEntity().getUniqueId())));

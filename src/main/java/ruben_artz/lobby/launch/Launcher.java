@@ -18,11 +18,11 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Launcher implements Launch {
+    @Getter
+    private static Launcher launcher;
+    @Getter
+    private static TaskScheduler scheduler;
     private final Lobby plugin = Lobby.getPlugin(Lobby.class);
-
-    @Getter private static Launcher launcher;
-    @Getter private static TaskScheduler scheduler;
-
     public Configuration config;
 
     @Override
@@ -116,11 +116,11 @@ public class Launcher implements Launch {
         plugin.sendConsole("&8--------------------------------------------------------------------------------------");
         plugin.sendConsole("&7         Developed by &cRuben_Artz");
         plugin.sendConsole(plugin.prefix + "&aVersion: &c" + plugin.getDescription().getVersion() + " &ais loading... &8(&6Current&8)");
-        plugin.sendConsole(plugin.prefix + "&aServer: &c"+Bukkit.getVersion());
+        plugin.sendConsole(plugin.prefix + "&aServer: &c" + Bukkit.getVersion());
         plugin.sendConsole(plugin.prefix + "&aLoading necessary files...");
         plugin.sendConsole(" ");
         plugin.sendConsole("&fLobby Head Item Starting plugin...");
-        plugin.sendConsole( "&f");
-        plugin.sendConsole( "&8--------------------------------------------------------------------------------------");
+        plugin.sendConsole("&f");
+        plugin.sendConsole("&8--------------------------------------------------------------------------------------");
     }
 }

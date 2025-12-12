@@ -23,7 +23,7 @@ public final class Lobby extends JavaPlugin {
             this.launch = Class.forName("ruben_artz.lobby.launch.Launcher").asSubclass(Launch.class).newInstance();
 
             launch.launch();
-        } catch (InstantiationException|IllegalAccessException|ClassNotFoundException e) {
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             throw new RuntimeException();
         }
     }
@@ -39,6 +39,7 @@ public final class Lobby extends JavaPlugin {
     public FileConfiguration getConfiguration() {
         return Launcher.getLauncher().config.getFile("config.yml");
     }
+
     public FileConfiguration getItems() {
         return Launcher.getLauncher().config.getFile("items.yml");
     }

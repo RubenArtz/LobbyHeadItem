@@ -11,7 +11,8 @@ public class generateItems {
     public static void setupItems(final Player player) {
         for (String key : Objects.requireNonNull(plugin.getItems().getConfigurationSection("ITEMS")).getKeys(false)) {
             if (plugin.getItems().getBoolean("ITEMS." + key + ".ENABLED")) {
-                if (!ProjectUtils.getWorldsItems(player, plugin.getItems().getStringList("ITEMS." + key + ".WORLDS"))) return;
+                if (!ProjectUtils.getWorldsItems(player, plugin.getItems().getStringList("ITEMS." + key + ".WORLDS")))
+                    return;
                 ProjectUtils.setItem(
                         player,
                         plugin.getItems().getInt("ITEMS." + key + ".SLOT"),
@@ -25,7 +26,8 @@ public class generateItems {
 
     public static void setupHead(final Player player) {
         if (plugin.getConfiguration().getBoolean("PLAYER_HEAD.ENABLED")) {
-            if (!ProjectUtils.getWorldsItems(player, plugin.getConfiguration().getStringList("PLAYER_HEAD.CONFIGURATION.WORLDS"))) return;
+            if (!ProjectUtils.getWorldsItems(player, plugin.getConfiguration().getStringList("PLAYER_HEAD.CONFIGURATION.WORLDS")))
+                return;
             ProjectUtils.setSkullOwner(
                     player,
                     plugin.getConfiguration().getInt("PLAYER_HEAD.PLAYER.ITEM.SLOT"),
@@ -37,7 +39,8 @@ public class generateItems {
 
     public static void setupBow(Player player) {
         if (plugin.getConfiguration().getBoolean("PLAYER_BOW.ENABLED")) {
-            if (!ProjectUtils.getWorldsItems(player, plugin.getConfiguration().getStringList("PLAYER_BOW.CONFIGURATION.WORLDS"))) return;
+            if (!ProjectUtils.getWorldsItems(player, plugin.getConfiguration().getStringList("PLAYER_BOW.CONFIGURATION.WORLDS")))
+                return;
             ProjectUtils.setBow(
                     player,
                     plugin.getConfiguration().getInt("PLAYER_BOW.BOW.SLOT"),

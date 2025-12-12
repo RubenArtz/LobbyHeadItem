@@ -7,8 +7,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import ruben_artz.lobby.Lobby;
-import ruben_artz.lobby.utils.generateItems;
 import ruben_artz.lobby.utils.ProjectUtils;
+import ruben_artz.lobby.utils.generateItems;
 
 import java.util.Objects;
 
@@ -31,7 +31,7 @@ public class PlayerChangedWorld implements Listener {
                             return;
                         }
                         if (plugin.getItems().getBoolean("ITEMS." + key + ".SETTINGS.REMOVE_WHEN_CHANGING_THE_WORLD")) {
-                            player.getInventory().remove(Objects.requireNonNull(XMaterial.valueOf(plugin.getItems().getString("ITEMS." + key + ".ITEM")).parseMaterial()));
+                            player.getInventory().remove(Objects.requireNonNull(XMaterial.valueOf(plugin.getItems().getString("ITEMS." + key + ".ITEM")).get()));
                         }
                     });
                 } catch (NullPointerException ignored) {

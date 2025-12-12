@@ -16,7 +16,8 @@ public class PlayerRespawn implements Listener {
     public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
         final Player player = event.getPlayer();
         if (plugin.getConfiguration().getBoolean("PLAYER_BOW.ENABLED")) {
-            if (!ProjectUtils.getWorldsItems(player, plugin.getConfiguration().getStringList("PLAYER_BOW.CONFIGURATION.WORLDS"))) return;
+            if (!ProjectUtils.getWorldsItems(player, plugin.getConfiguration().getStringList("PLAYER_BOW.CONFIGURATION.WORLDS")))
+                return;
 
             if (plugin.getConfiguration().getBoolean("PLAYER_BOW.CONFIGURATION.GIVE_ON_RESPAWN")) {
                 generateItems.setupBow(player);

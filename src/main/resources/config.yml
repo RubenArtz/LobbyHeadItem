@@ -52,7 +52,7 @@ PLAYER_BOW:
     PARTICLES:
       ENABLED: true
       LIST:
-        - 'DRAGON_BREATH'
+        - 'FLAME'
     MOVE_DISABLE: true
     NO_DROP_ITEM: true
     GIVE_ON_RESPAWN: true

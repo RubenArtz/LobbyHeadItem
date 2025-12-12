@@ -1,12 +1,12 @@
 plugins {
-    id ("java")
-    id ("com.github.johnrengelman.shadow") version "8.1.1"
+    id("java")
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "ruben_artz.lobby"
 version = "2.0.21"
 
-val lombokVer = "1.18.30"
+val lombokVer = "1.18.42"
 
 registerOutputTask("Ruben_Artz", "D:\\Ruben_Artz\\STN Studios\\Development\\plugins")
 
@@ -30,49 +30,47 @@ repositories {
 }
 
 dependencies {
-    compileOnly ("org.spigotmc:spigot-api:1.21.3-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
+    compileOnly("org.projectlombok:lombok:$lombokVer")
+    compileOnly("com.mojang:authlib:1.5.25")
+    compileOnly("org.jetbrains:annotations:23.0.0")
+    compileOnly("me.clip:placeholderapi:2.11.7")
 
-    compileOnly ("org.projectlombok:lombok:$lombokVer")
-    compileOnly ("com.mojang:authlib:1.5.25")
-    compileOnly ("org.jetbrains:annotations:23.0.0")
-    compileOnly ("me.clip:placeholderapi:2.11.6")
-    compileOnly ("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
+    annotationProcessor("org.projectlombok:lombok:$lombokVer")
 
-    annotationProcessor ("org.projectlombok:lombok:$lombokVer")
-
-    implementation ("org.bstats:bstats-bukkit:3.0.0")
+    implementation("org.bstats:bstats-bukkit:3.0.0")
     /*
     Keep up to date
     Url: https://github.com/CryptoMorin/XSeries/releases
      */
-    implementation ("com.github.cryptomorin:XSeries:13.3.3")
+    implementation("com.github.cryptomorin:XSeries:13.5.1")
     /*
     Keep up to date
     Url: https://github.com/Anon8281/UniversalScheduler
      */
-    implementation ("com.github.Anon8281:UniversalScheduler:0.1.6")
+    implementation("com.github.Anon8281:UniversalScheduler:0.1.6")
 }
 
 tasks.shadowJar {
     archiveFileName.set("Lobby Head Item.jar")
 
-    relocate ("org.bstats", "ruben_artz.lobby.libraries.bstats")
-    relocate ("com.cryptomorin.xseries", "ruben_artz.lobby.libraries.xseries")
-    relocate ("com.github.Anon8281.universalScheduler", "ruben_artz.lobby.libraries.universalScheduler")
+    relocate("org.bstats", "ruben_artz.lobby.libraries.bstats")
+    relocate("com.cryptomorin.xseries", "ruben_artz.lobby.libraries.xseries")
+    relocate("com.github.Anon8281.universalScheduler", "ruben_artz.lobby.libraries.universalScheduler")
 
-    exclude ("com/cryptomorin/xseries/abstractions/**")
-    exclude ("com/cryptomorin/xseries/messages/**")
+    exclude("com/cryptomorin/xseries/abstractions/**")
+    exclude("com/cryptomorin/xseries/messages/**")
 
-    exclude ("com/cryptomorin/xseries/NoteBlockMusic*")
-    exclude ("com/cryptomorin/xseries/XBiome*")
-    exclude ("com/cryptomorin/xseries/XBlock*")
-    exclude ("com/cryptomorin/xseries/XEnchantment*")
-    exclude ("com/cryptomorin/xseries/XEntity*")
-    exclude ("com/cryptomorin/xseries/XEntityType*")
-    exclude ("com/cryptomorin/xseries/XItemStack*")
-    exclude ("com/cryptomorin/xseries/XPotion*")
-    exclude ("com/cryptomorin/xseries/XTag*")
-    exclude ("com/cryptomorin/xseries/XWorldBorder*")
+    exclude("com/cryptomorin/xseries/NoteBlockMusic*")
+    exclude("com/cryptomorin/xseries/XBiome*")
+    exclude("com/cryptomorin/xseries/XBlock*")
+    exclude("com/cryptomorin/xseries/XEnchantment*")
+    exclude("com/cryptomorin/xseries/XEntity*")
+    exclude("com/cryptomorin/xseries/XEntityType*")
+    exclude("com/cryptomorin/xseries/XItemStack*")
+    exclude("com/cryptomorin/xseries/XPotion*")
+    exclude("com/cryptomorin/xseries/XTag*")
+    exclude("com/cryptomorin/xseries/XWorldBorder*")
 }
 
 java {

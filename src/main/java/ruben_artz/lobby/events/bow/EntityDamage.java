@@ -14,7 +14,8 @@ public class EntityDamage implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityDamageEvent(EntityDamageEvent event) {
-        if (!(event.getEntity() instanceof Player) && !(event.getEntity() instanceof Pig) && !(event.getEntity() instanceof Horse)) return;
+        if (!(event.getEntity() instanceof Player) && !(event.getEntity() instanceof Pig) && !(event.getEntity() instanceof Horse))
+            return;
         if (event.getCause() != EntityDamageEvent.DamageCause.FALL) return;
 
         if (plugin.playerUUIDs.stream().anyMatch(u -> u.equals(event.getEntity().getUniqueId()))) {
