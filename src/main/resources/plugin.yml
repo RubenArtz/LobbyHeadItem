@@ -1,11 +1,11 @@
 #                                                           Developed by Ruben_Artz
 #
-#                                                     (PLAY.STN-STUDIOS.COM @ (C) 2018-2022)
+#                                                     (MC.ARTZSTUDIO.DEV @ (C) 2018-2026)
 
 name: 'LobbyHeadItem'
 version: '${version}'
-main: 'ruben_artz.lobby.Lobby'
-authors: [ 'Ruben_Artz', 'STN Studios' ]
+main: 'artzstudio.dev.lobby.spigot.Lobby'
+authors: [ 'Ruben_Artz', 'Artz Studio' ]
 softdepend: [ 'PlaceholderAPI' ]
 website: 'https://www.spigotmc.org/resources/62507/'
 description: 'Show the head of the game in the lobby!'

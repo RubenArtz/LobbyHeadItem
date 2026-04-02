@@ -15,12 +15,22 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-pluginManagement {
-    repositories {
-        maven("https://repository.rubenmatias.com/releases")
-        gradlePluginPortal()
-        mavenCentral()
-    }
-}
+package artzstudio.dev.lobby.spigot.config;
 
-rootProject.name = "Lobby Head Item"
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
+public enum ConfigType {
+
+
+    // --- GLOBAL SETTINGS ---
+    CONFIG("config.yml", null, "version"),
+    ITEMS("items.yml", null, "version");
+
+
+    private final String fileName;
+    private final String subFolder;
+    private final String versionRoute;
+}

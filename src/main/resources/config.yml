@@ -71,7 +71,25 @@ PLAYER_BOW:
     ITEM: 'ARROW'
     NAME: '&aThe Secret Arrow!'
 
-version: '1.0'
+GRAPPLING_HOOK:
+  ENABLED: true
+  ITEM:
+    SLOT: 4
+    MATERIAL: "FISHING_ROD"
+    NAME: "&aGrappling Hook Gadget &7(Right Click)"
+    LORE:
+      - '&7Cast your rod to launch yourself into the air!'
+  CONFIGURATION:
+    WORLDS:
+      - 'Lobby'
+      - 'world'
+    REMOVE_WHEN_CHANGING_THE_WORLD: true
+    GIVE_ON_RESPAWN: true
+    NO_DROP_ITEM: true
+    MOVE_DISABLE: true
+    NO_DROP_ON_DEATH: true
+
+version: '2'
 
 #      ___           ___
 #     /\__\         /\  \         _____
