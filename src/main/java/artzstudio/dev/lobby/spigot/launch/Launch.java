@@ -15,12 +15,10 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-pluginManagement {
-    repositories {
-        maven("https://repository.rubenmatias.com/releases")
-        gradlePluginPortal()
-        mavenCentral()
-    }
-}
+package artzstudio.dev.lobby.spigot.launch;
 
-rootProject.name = "Lobby Head Item"
+public interface Launch {
+    void launch();
+
+    void shutdown();
+}

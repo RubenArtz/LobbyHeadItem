@@ -15,12 +15,20 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-pluginManagement {
-    repositories {
-        maven("https://repository.rubenmatias.com/releases")
-        gradlePluginPortal()
-        mavenCentral()
+package artzstudio.dev.lobby.spigot.utils;
+
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+
+public class addColor {
+
+    public static String addColors(String input) {
+        if ((input == null) || (input.isEmpty())) return input;
+        return ChatColor.translateAlternateColorCodes('&', input);
+    }
+
+    public static String addColors(Player player, String input) {
+        if ((input == null) || (input.isEmpty())) return input;
+        return ChatColor.translateAlternateColorCodes('&', ProjectUtils.setPlaceholders(player, input));
     }
 }
-
-rootProject.name = "Lobby Head Item"
