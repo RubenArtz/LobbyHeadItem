@@ -17,7 +17,6 @@
 
 package artzstudio.dev.lobby.spigot.utils;
 
-import artzstudio.dev.lobby.spigot.Lobby;
 import artzstudio.dev.lobby.spigot.launch.Launcher;
 import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XSound;
@@ -48,7 +47,6 @@ import java.util.concurrent.atomic.AtomicReference;
 @SuppressWarnings("deprecation")
 public class ProjectUtils {
     public static final String DEFAULT_UUID = "3a730223-120a-4b66-8e1f-3e5a5125875c";
-    private static final Lobby plugin = Lobby.getPlugin(Lobby.class);
 
     public static String setPlaceholders(OfflinePlayer player, String text) {
         if (isPluginEnabled("PlaceholderAPI")) {
@@ -228,7 +226,11 @@ public class ProjectUtils {
         Launcher.getFoliaLib().getScheduler().runLaterAsync(runnable, delay);
     }
 
-    public static boolean isVersion_1_9_To_1_21() {
+    public static void runTaskAtEntityLater(Player player, long delay, Runnable runnable) {
+        Launcher.getFoliaLib().getScheduler().runAtEntityLater(player, runnable, delay);
+    }
+
+    public static boolean isVersion_1_9_To_1_26() {
         return Bukkit.getVersion().contains("1.9") ||
                 Bukkit.getVersion().contains("1.10") ||
                 Bukkit.getVersion().contains("1.11") ||

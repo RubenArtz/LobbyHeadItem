@@ -21,8 +21,8 @@ plugins {
     alias(libs.plugins.slimjar)
 }
 
-group = "artzstudio"
-version = "2.1.21"
+group = "artzstudio.dev"
+version = "2.2.21"
 
 val slimJarBase = "artzstudio.dev.lobby.slimjar."
 val libsBase = "artzstudio.dev.lobby.relocated."

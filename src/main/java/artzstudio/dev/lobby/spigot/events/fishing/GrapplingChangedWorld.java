@@ -40,7 +40,7 @@ public class GrapplingChangedWorld implements Listener {
 
                 try {
                     if (world.equalsIgnoreCase(action)) {
-                        ProjectUtils.runTaskLater(10L, () -> generateItems.setupGrappling(player));
+                        ProjectUtils.runTaskAtEntityLater(player, 10L, () -> generateItems.setupGrappling(player));
                         return;
                     }
                     if (plugin.getConfiguration().getBoolean("GRAPPLING_HOOK.CONFIGURATION.REMOVE_WHEN_CHANGING_THE_WORLD")) {
@@ -49,7 +49,6 @@ public class GrapplingChangedWorld implements Listener {
                     }
                 } catch (NullPointerException ignored) {
                 }
-
             });
         }
     }

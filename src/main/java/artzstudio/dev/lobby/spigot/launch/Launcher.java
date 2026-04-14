@@ -115,7 +115,7 @@ public class Launcher implements Launch {
                 new GrapplingRespawn()
         ).forEach(li -> event.registerEvents(li, plugin));
 
-        if (ProjectUtils.isVersion_1_9_To_1_21()) {
+        if (ProjectUtils.isVersion_1_9_To_1_26()) {
             Arrays.asList(
                     new artzstudio.dev.lobby.spigot.events.items.PlayerSwapHandItems(),
                     new artzstudio.dev.lobby.spigot.events.head.PlayerSwapHandItems(),

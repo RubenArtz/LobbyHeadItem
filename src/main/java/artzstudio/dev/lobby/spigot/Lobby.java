@@ -28,15 +28,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public final class Lobby extends JavaPlugin {
 
     @Getter
     public String prefix = "&8[&9Lobby Head Item&8]&f ";
-    public List<UUID> playerUUIDs = new ArrayList<>();
+    public Set<UUID> playerUUIDs = java.util.concurrent.ConcurrentHashMap.newKeySet();
     @Getter
     private ConfigurationManager configManager;
     private Launch launch;

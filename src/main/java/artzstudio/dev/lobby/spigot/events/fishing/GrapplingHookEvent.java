@@ -95,7 +95,7 @@ public class GrapplingHookEvent implements Listener {
 
             plugin.playerUUIDs.add(player.getUniqueId());
 
-            ProjectUtils.runTaskLater(60L, () -> plugin.playerUUIDs.removeIf(u -> u.equals(player.getUniqueId())));
+            ProjectUtils.runTaskAtEntityLater(player, 60L, () -> plugin.playerUUIDs.remove(player.getUniqueId()));
         }
     }
 
