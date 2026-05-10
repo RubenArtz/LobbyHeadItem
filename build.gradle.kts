@@ -22,7 +22,7 @@ plugins {
 }
 
 group = "artzstudio.dev"
-version = "2.2.21"
+version = "2.3.26"
 
 val slimJarBase = "artzstudio.dev.lobby.slimjar."
 val libsBase = "artzstudio.dev.lobby.relocated."

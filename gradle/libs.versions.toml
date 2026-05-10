@@ -1,17 +1,17 @@
 [versions]
 ## Plugins
-shadow = "9.0.0-rc1" # https://plugins.gradle.org/plugin/com.gradleup.shadow
+shadow = "9.4.1" # https://plugins.gradle.org/plugin/com.gradleup.shadow
 slimjar = "1.0.0" # https://repository.rubenmatias.com/releases
 
 ## Main Software
 spigotmc = "1.20.4-R0.1-SNAPSHOT"
 
 ## Global
-lombok = "1.18.42" # https://projectlombok.org/download
+lombok = "1.18.46" # https://projectlombok.org/download
 authlib = "1.5.25"
 placeholderapi = "2.11.7" # https://github.com/PlaceholderAPI/PlaceholderAPI/releases
 bstats = "3.1.0" # https://bstats.org/add-plugin
-xseries = "13.6.0" # https://github.com/CryptoMorin/XSeries
+xseries = "13.6.0+26.1" # https://github.com/CryptoMorin/XSeries
 foliaLib = "0.5.1" # https://github.com/TechnicallyCoded/FoliaLib/releases/
 boostedYaml = "1.3.7" # https://github.com/dejvokep/boosted-yaml
 
@@ -26,7 +26,7 @@ lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 authlib = { module = "com.mojang:authlib", version.ref = "authlib" }
 placeholderapi = { module = "me.clip:placeholderapi", version.ref = "placeholderapi" }
 bstats = { module = "org.bstats:bstats-bukkit", version.ref = "bstats" }
-xseries = { module = "com.github.cryptomorin:XSeries", version.ref = "xseries" }
+xseries = { module = "io.github.almighty-satan:XSeries", version.ref = "xseries" }
 foliaLib = { module = "com.tcoded:FoliaLib", version.ref = "foliaLib" }
 boostedYaml = { module = "dev.dejvokep:boosted-yaml", version.ref = "boostedYaml" }
 
