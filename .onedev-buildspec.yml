@@ -7,7 +7,7 @@ jobs:
     remoteUrl: https://github.com/RubenArtz/LobbyHeadItem.git
     userName: RubenArtz
     passwordSecret: GitHub
-    force: false
+    force: true
     condition: SUCCESSFUL
     optional: false
   triggers:
